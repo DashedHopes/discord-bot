@@ -1,7 +1,8 @@
 const player = require("../client/player");
 const { SlashCommandBuilder } = require('@discordjs/builders');
+
 module.exports = {
-    data: new SlashCommandBuilder()
+    data: new SlashCommandBuilder() 
     .setName('queue')
     .setDescription('display the song queue'),
     async execute (interaction) {
