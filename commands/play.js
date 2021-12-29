@@ -11,12 +11,11 @@ module.exports = {
 				.setDescription('the Youtube URL to play')
 				.setRequired(true),
 		),
-	async execute(client, interaction) {
-
+	async execute(interaction) {
 		const songTitle = interaction.options.getString("input");
 
 		if (!interaction.member.voice.channel)
-			return interaction.followUp({
+			return interaction.reply({
 				content: "Please join a voice channel!",
 			});
 
@@ -32,12 +31,13 @@ module.exports = {
 		if (!queue.connection)
 			await queue.connect(interaction.member.voice.channel);
 
-		await interaction.followUp({ content: `Playing ${songTitle}` });
+		await interaction.reply({ content: `Playing ${songTitle}` });
 
 		searchResult.playlist
 			? queue.addTracks(searchResult.tracks)
 			: queue.addTrack(searchResult.tracks[0]);
 
 		if (!queue.playing) await queue.play();
+
 	},
 };

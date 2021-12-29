@@ -1,5 +1,5 @@
 const { Player } = require("discord-player");
-const client = require("../index.js");
+const client = require("../init.js");
 
 module.exports = new Player(client, {
 	ytdlOptions: {
