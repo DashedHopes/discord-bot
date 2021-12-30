@@ -31,13 +31,12 @@ module.exports = {
 		if (!queue.connection)
 			await queue.connect(interaction.member.voice.channel);
 
-		await interaction.reply({ content: `Playing ${songTitle}` });
-
 		searchResult.playlist
 			? queue.addTracks(searchResult.tracks)
 			: queue.addTrack(searchResult.tracks[0]);
 
 		if (!queue.playing) await queue.play();
 
+		await interaction.reply({ content: `Added to queue: 🎶 | [**${searchResult.tracks[0].title}**](${searchResult.tracks[0].url}) - ${searchResult.tracks[0].requestedBy.tag}` });
 	},
 };

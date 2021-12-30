@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
 const player = require("../client/player");
 
 module.exports = {
@@ -6,6 +7,7 @@ module.exports = {
 		.setName('playing')
 		.setDescription('Shows the song that is currently playing'),
 	async execute(interaction) {
+        if (interaction) {
 		const queue = player.getQueue(interaction.guildId);
 
         if (!queue?.playing)
@@ -16,6 +18,16 @@ module.exports = {
         const progress = queue.createProgressBar();
         const perc = queue.getPlayerTimestamp();
 
+        const embed = new MessageEmbed()
+            .setColor("RANDOM")
+            .setTitle("Now Playing")
+            .setDescription(`🎶 | **${queue.current.title}**! (\`${perc.progress}%\`)`)
+            .addField( "\u200b", progress )
+            .setFooter(`Queued by ${queue.current.requestedBy.tag}`);
+
+        await interaction.reply({ embeds: [embed] });
+        }
+        /*
         return interaction.reply({
             embeds: [
                 {
@@ -27,12 +39,13 @@ module.exports = {
                             value: progress,
                         },
                     ],
-                    color: client.config.clientColor,
+                    color: "RANDOM",
                     footer: {
                         text: `Queued by ${queue.current.requestedBy.tag}`,
                     },
                 },
             ],
         });
+        */
 	},
 };
