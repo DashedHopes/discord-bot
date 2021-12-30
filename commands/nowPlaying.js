@@ -27,25 +27,5 @@ module.exports = {
 
         await interaction.reply({ embeds: [embed] });
         }
-        /*
-        return interaction.reply({
-            embeds: [
-                {
-                    title: "Now Playing",
-                    description: `🎶 | **${queue.current.title}**! (\`${perc.progress}%\`)`,
-                    fields: [
-                        {
-                            name: "\u200b",
-                            value: progress,
-                        },
-                    ],
-                    color: "RANDOM",
-                    footer: {
-                        text: `Queued by ${queue.current.requestedBy.tag}`,
-                    },
-                },
-            ],
-        });
-        */
 	},
 };
