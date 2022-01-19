@@ -8,24 +8,25 @@ module.exports = {
 		.setDescription('Shows the song that is currently playing'),
 	async execute(interaction) {
         if (interaction) {
-		const queue = player.getQueue(interaction.guildId);
+            await interaction.deferReply();
+		    const queue = player.getQueue(interaction.guildId);
 
-        if (!queue?.playing)
-            return interaction.reply({
-                content: "No music is currently being played",
+            if (!queue?.playing)
+                return interaction.editReply({
+                    content: "No music is currently being played",
             });
 
-        const progress = queue.createProgressBar();
-        const perc = queue.getPlayerTimestamp();
+            const progress = queue.createProgressBar();
+            const perc = queue.getPlayerTimestamp();
 
-        const embed = new MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle("Now Playing")
-            .setDescription(`🎶 | **${queue.current.title}**! (\`${perc.progress}%\`)`)
-            .addField( "\u200b", progress )
-            .setFooter(`Queued by ${queue.current.requestedBy.tag}`);
+            const embed = new MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle("Now Playing")
+                .setDescription(`🎶 | **${queue.current.title}**! (\`${perc.progress}%\`)`)
+                .addField( "\u200b", progress )
+                .setFooter(`Queued by ${queue.current.requestedBy.tag}`);
 
-        await interaction.reply({ embeds: [embed] });
+            await interaction.editReply({ embeds: [embed] });
         }
 	},
 };
